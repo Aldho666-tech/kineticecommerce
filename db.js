@@ -65,7 +65,7 @@ function get(sql, params = []) {
 function getInitialProducts() {
   return [
     {
-      name: 'Kinetic Zegama-X',
+      name: 'Marshal Zegama-X',
       category: 'Running',
       price: 160.00,
       sale_price: 129.99,
@@ -145,7 +145,7 @@ function getInitialProducts() {
       stock: 30
     },
     {
-      name: 'Kinetic Utility Vest',
+      name: 'Marshal Utility Vest',
       category: 'Accessories',
       price: 110.00,
       sale_price: 89.99,

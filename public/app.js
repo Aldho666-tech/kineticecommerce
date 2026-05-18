@@ -164,7 +164,7 @@ function parseImagesConfig(imagesField) {
 // ==========================================================================
 const AppState = {
   products: [],
-  cart: JSON.parse(localStorage.getItem('kinetic_cart') || '[]'),
+  cart: JSON.parse(localStorage.getItem('marshal_cart') || '[]'),
   filters: {
     category: '',
     search: '',
@@ -179,7 +179,7 @@ const AppState = {
 
 // Save current cart structure to LocalStorage
 function saveCart() {
-  localStorage.setItem('kinetic_cart', JSON.stringify(AppState.cart));
+  localStorage.setItem('marshal_cart', JSON.stringify(AppState.cart));
 }
 
 
