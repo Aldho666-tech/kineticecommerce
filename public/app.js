@@ -1078,4 +1078,121 @@ document.addEventListener('DOMContentLoaded', () => {
     successDrawer.classList.remove('active');
     fetchProducts(); // Refresh PLP catalog
   });
+
+  // ==========================================================================
+  // 14. MOBILE NAVIGATION DRAWER & DRAWER ACTIONS
+  // ==========================================================================
+  const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+  const mobileNavOverlay = document.getElementById('mobile-nav-overlay');
+  const mobileNavClose = document.getElementById('mobile-nav-close');
+  const mobileOpenAdminBtn = document.getElementById('mobile-open-admin-btn');
+  
+  if (mobileMenuBtn && mobileNavOverlay) {
+    mobileMenuBtn.addEventListener('click', () => {
+      mobileNavOverlay.classList.add('active');
+    });
+  }
+
+  if (mobileNavClose && mobileNavOverlay) {
+    mobileNavClose.addEventListener('click', () => {
+      mobileNavOverlay.classList.remove('active');
+    });
+  }
+
+  if (mobileNavOverlay) {
+    mobileNavOverlay.addEventListener('click', (e) => {
+      if (e.target === mobileNavOverlay) {
+        mobileNavOverlay.classList.remove('active');
+      }
+    });
+  }
+
+  if (mobileOpenAdminBtn) {
+    mobileOpenAdminBtn.addEventListener('click', () => {
+      if (mobileNavOverlay) mobileNavOverlay.classList.remove('active');
+      const adminDrawer = document.getElementById('admin-drawer-overlay');
+      if (adminDrawer) adminDrawer.classList.add('active');
+      loadAdminTab('sec-add-product');
+    });
+  }
+
+  // Handle Mobile Menu links
+  const mobileNavLinks = document.querySelectorAll('.mobile-nav-link');
+  mobileNavLinks.forEach(link => {
+    link.addEventListener('click', () => {
+      mobileNavLinks.forEach(l => l.classList.remove('active'));
+      link.classList.add('active');
+
+      const cat = link.getAttribute('data-category');
+      AppState.filters.category = cat;
+
+      // Update primary nav active state
+      const primaryLinks = document.querySelectorAll('.nav-link');
+      primaryLinks.forEach(l => {
+        if (l.getAttribute('data-category') === cat) l.classList.add('active');
+        else l.classList.remove('active');
+      });
+
+      // Update checkbox filters on sidebar
+      document.querySelectorAll('.cat-filter').forEach(chk => {
+        chk.checked = chk.value === cat;
+      });
+
+      // Update Breadcrumbs
+      const crumbSpan = document.querySelector('#breadcrumbs span');
+      if (crumbSpan) {
+        crumbSpan.textContent = cat ? cat : 'All Products';
+      }
+
+      if (mobileNavOverlay) mobileNavOverlay.classList.remove('active');
+      fetchProducts();
+    });
+  });
+
+  // ==========================================================================
+  // 15. MOBILE SEARCH COLLAPSIBLE TRIGGER
+  // ==========================================================================
+  const searchIconTrigger = document.getElementById('search-icon-trigger');
+  const searchPillWrapper = document.getElementById('search-pill-wrapper');
+  const searchCloseMobile = document.getElementById('search-close-mobile');
+  
+  if (searchIconTrigger && searchPillWrapper) {
+    searchIconTrigger.addEventListener('click', (e) => {
+      if (window.innerWidth <= 768) {
+        searchPillWrapper.classList.add('search-expanded');
+        const input = document.getElementById('search-input');
+        if (input) input.focus();
+        e.stopPropagation();
+      }
+    });
+  }
+
+  if (searchCloseMobile && searchPillWrapper) {
+    searchCloseMobile.addEventListener('click', (e) => {
+      searchPillWrapper.classList.remove('search-expanded');
+      e.stopPropagation();
+    });
+  }
+
+  document.addEventListener('click', (e) => {
+    if (searchPillWrapper && searchPillWrapper.classList.contains('search-expanded')) {
+      if (!searchPillWrapper.contains(e.target)) {
+        searchPillWrapper.classList.remove('search-expanded');
+      }
+    }
+  });
+
+  // ==========================================================================
+  // 16. MOBILE FILTERS DRAWER CLOSE ACTION
+  // ==========================================================================
+  const closeFiltersBtn = document.getElementById('close-filters-btn');
+  if (closeFiltersBtn) {
+    closeFiltersBtn.addEventListener('click', () => {
+      const filterSidebar = document.getElementById('filter-sidebar');
+      const filterBtnText = document.getElementById('filter-btn-text');
+      if (filterSidebar) filterSidebar.classList.add('collapsed');
+      if (filterBtnText) filterBtnText.textContent = 'Show Filters';
+    });
+  }
 });
+

@@ -1488,6 +1488,109 @@ button:active {
 }
 
 /* ==========================================================================
+   MOBILE HAMBURGER & DRAWER BASE STYLES
+   ========================================================================== */
+.mobile-menu-btn {
+  display: none;
+  background: transparent;
+  border: none;
+  width: 40px;
+  height: 40px;
+  border-radius: var(--rounded-full);
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  cursor: pointer;
+}
+
+.mobile-menu-btn svg {
+  width: 24px;
+  height: 24px;
+  fill: none;
+  stroke: var(--color-ink);
+  stroke-width: 1.5;
+}
+
+.mobile-nav-drawer {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  max-width: 320px;
+  height: 100%;
+  background-color: var(--color-canvas);
+  z-index: 610;
+  transform: translateX(-100%);
+  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  display: flex;
+  flex-direction: column;
+  border-right: 1px solid var(--color-hairline);
+}
+
+#mobile-nav-overlay.active .mobile-nav-drawer {
+  transform: translateX(0);
+}
+
+.mobile-nav-content {
+  flex-grow: 1;
+  padding: 32px 24px;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+}
+
+.mobile-links {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.mobile-nav-link {
+  font-size: 20px;
+  font-weight: 500;
+  color: var(--color-ink);
+  cursor: pointer;
+  padding: 8px 0;
+  transition: padding-left 0.2s, font-weight 0.2s;
+  display: block;
+}
+
+.mobile-nav-link.active {
+  font-weight: 700;
+  border-left: 3px solid var(--color-ink);
+  padding-left: 12px;
+}
+
+.mobile-utility-links {
+  margin-top: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.mobile-utility-link {
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--color-charcoal);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  transition: color 0.2s;
+}
+
+.mobile-utility-link:hover {
+  color: var(--color-ink);
+}
+
+.search-close-mobile {
+  display: none;
+  background: transparent;
+  font-size: 24px;
+  color: var(--color-ink);
+  border: none;
+}
+
+/* ==========================================================================
    RESPONSIVE DESIGN (from Design.MD)
    ========================================================================== */
 @media (max-width: 1023px) {
@@ -1548,6 +1651,13 @@ button:active {
 }
 
 @media (max-width: 768px) {
+  /* Scale spacing units dynamically on mobile */
+  :root {
+    --spacing-section: 32px;
+    --spacing-xl: 18px;
+    --spacing-xxl: 24px;
+  }
+
   .utility-bar {
     display: none; /* Hide top bar on mobile for maximum clean space */
   }
@@ -1560,23 +1670,115 @@ button:active {
   .logo-area {
     font-size: 24px;
   }
+
+  @media (max-width: 400px) {
+    .logo-area {
+      font-size: 0; /* Hide text, keep only logo swoosh on very narrow screens */
+    }
+  }
   
   .nav-links {
-    display: none; /* Navigation collapses dynamically into category filter chips */
+    display: none; /* Navigation collapses into mobile navigation drawer */
+  }
+
+  .mobile-menu-btn {
+    display: flex; /* Show hamburger button on mobile/tablet */
+  }
+  
+  /* Collapsible Search Trigger Styling */
+  .search-pill-wrapper {
+    position: static;
   }
   
   .search-pill {
-    width: 130px;
-    padding: 8px 12px 8px 32px;
-  }
-  
-  .search-pill:focus {
-    width: 180px;
-    box-shadow: 0 0 0 8px var(--color-soft-cloud);
+    width: 40px;
+    height: 40px;
+    padding: 0;
+    border-radius: var(--rounded-full);
+    background-color: transparent;
+    cursor: pointer;
+    font-size: 0;
+    border: none;
   }
   
   .search-icon-nav {
-    left: 10px;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    pointer-events: none;
+    stroke: var(--color-ink);
+  }
+
+  .search-pill-wrapper.search-expanded .search-pill {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border-radius: 0;
+    background-color: var(--color-canvas);
+    padding: 0 48px;
+    font-size: 16px;
+    border-bottom: 2px solid var(--color-ink);
+    z-index: 150;
+    cursor: text;
+  }
+
+  .search-pill-wrapper.search-expanded .search-icon-nav {
+    left: 16px;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 160;
+  }
+
+  .search-pill-wrapper.search-expanded .search-close-mobile {
+    display: flex;
+    position: absolute;
+    right: 16px;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 160;
+    font-size: 24px;
+    color: var(--color-ink);
+  }
+
+  /* Off-canvas full-screen filter drawer */
+  .filter-sidebar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: var(--color-canvas);
+    z-index: 600;
+    padding: 32px 24px !important;
+    display: flex !important;
+    flex-direction: column !important;
+    gap: var(--spacing-xl) !important;
+    overflow-y: auto !important;
+    transform: translateX(-100%);
+    transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  .filter-sidebar:not(.collapsed) {
+    transform: translateX(0);
+  }
+  
+  .filter-sidebar.collapsed {
+    display: flex !important;
+    transform: translateX(-100%);
+  }
+
+  .filter-group {
+    border-right: none !important;
+    border-bottom: 1px solid var(--color-hairline-soft) !important;
+    padding-right: 0 !important;
+    padding-bottom: var(--spacing-xl) !important;
+    width: 100% !important;
+  }
+  
+  .filter-group:last-child {
+    border-bottom: none !important;
+    padding-bottom: 0 !important;
   }
 
   /* Stack sub-nav components */
@@ -1713,32 +1915,22 @@ button:active {
   .catalog-section {
     padding: var(--spacing-sm) 16px;
   }
-  
-  .filter-sidebar {
-    flex-direction: column;
-    gap: var(--spacing-sm);
-  }
-  
-  .filter-group {
-    border-right: none;
-    border-bottom: 1px solid var(--color-hairline-soft);
-    padding-right: 0;
-    padding-bottom: var(--spacing-sm);
-    width: 100%;
-  }
-  
-  .filter-group:last-child {
-    border-bottom: none;
-    padding-bottom: 0;
-  }
 
   .product-grid {
-    grid-template-columns: 1fr; /* Single column clean display */
-    gap: var(--spacing-md);
+    grid-template-columns: repeat(2, 1fr); /* 2-up responsive square-crop cards */
+    gap: 12px;
   }
   
-  .product-card-image-wrapper {
-    margin-bottom: var(--spacing-xs);
+  .product-card-name {
+    font-size: 14px;
+  }
+  
+  .product-card-subtitle {
+    font-size: 12px;
+  }
+  
+  .product-card-price-row {
+    font-size: 14px;
   }
   
   .campaign-hero {

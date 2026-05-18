@@ -53,12 +53,13 @@
     </nav>
 
     <div class="nav-right-cluster">
-      <div class="search-pill-wrapper">
-        <svg class="search-icon-nav" viewBox="0 0 24 24">
+      <div class="search-pill-wrapper" id="search-pill-wrapper">
+        <svg class="search-icon-nav" id="search-icon-trigger" viewBox="0 0 24 24">
           <circle cx="11" cy="11" r="8"></circle>
           <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
         </svg>
         <input type="text" id="search-input" class="search-pill" placeholder="Search">
+        <button class="search-close-mobile" id="search-close-mobile" style="display: none;">×</button>
       </div>
 
       <button class="wishlist-btn" id="wishlist-btn" title="Favorites">
@@ -74,6 +75,14 @@
           <path d="M16 10a4 4 0 0 1-8 0"></path>
         </svg>
         <span class="cart-count" id="cart-badge">0</span>
+      </button>
+
+      <button class="mobile-menu-btn" id="mobile-menu-btn" title="Menu">
+        <svg viewBox="0 0 24 24">
+          <line x1="3" y1="12" x2="21" y2="12"></line>
+          <line x1="3" y1="6" x2="21" y2="6"></line>
+          <line x1="3" y1="18" x2="21" y2="18"></line>
+        </svg>
       </button>
     </div>
   </header>
@@ -132,6 +141,11 @@
   <main class="catalog-section">
     <!-- Left Filter Sidebar -->
     <aside class="filter-sidebar" id="filter-sidebar">
+      <div class="filter-mobile-header" style="display: none; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--color-hairline-soft); padding-bottom: 16px; margin-bottom: 8px;">
+        <h2 class="heading-lg" style="margin: 0;">Filters</h2>
+        <button class="cart-close-btn" id="close-filters-btn" style="position: static; font-size: 28px;">×</button>
+      </div>
+
       <div class="filter-group">
         <h3 class="filter-title">Category</h3>
         <div class="filter-options">
@@ -356,7 +370,7 @@
        SUCCESS PANEL OVERLAY
        ========================================================================== -->
   <div class="modal-overlay" id="success-overlay">
-    <div class="pdp-modal success-panel" style="width: 440px; height: auto;">
+    <div class="pdp-modal success-panel" style="width: 100%; max-width: 440px; height: auto;">
       <div class="success-icon-wrapper">
         <svg viewBox="0 0 24 24">
           <polyline points="20 6 9 17 4 12"></polyline>
@@ -455,6 +469,44 @@
           <div id="admin-orders-list">
             <!-- Orders cards loaded dynamically -->
           </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==========================================================================
+       MOBILE NAVIGATION DRAWER
+       ========================================================================== -->
+  <div class="cart-drawer-overlay" id="mobile-nav-overlay">
+    <div class="mobile-nav-drawer">
+      <div class="cart-header">
+        <div class="logo-area">
+          <svg class="logo-swoosh" viewBox="0 0 100 100" style="width: 32px; height: 32px; fill: var(--color-ink);">
+            <path d="M15 75 C 35 45, 75 30, 90 25 C 60 55, 30 70, 15 75 Z" />
+          </svg>
+          KINETIC
+        </div>
+        <button class="cart-close-btn" id="mobile-nav-close">×</button>
+      </div>
+      <div class="mobile-nav-content">
+        <nav class="mobile-links">
+          <span class="mobile-nav-link active" data-category="">New & Featured</span>
+          <span class="mobile-nav-link" data-category="Running">Running</span>
+          <span class="mobile-nav-link" data-category="Apparel">Apparel</span>
+          <span class="mobile-nav-link" data-category="Accessories">Accessories</span>
+        </nav>
+        <div class="mobile-utility-links">
+          <hr style="border: 0; border-top: 1px solid var(--color-hairline-soft); margin: 24px 0;">
+          <span class="mobile-utility-link" id="mobile-open-admin-btn" style="cursor: pointer; font-weight: 700; color: var(--color-ink); display: flex; align-items: center; gap: 8px;">
+            <svg width="14" height="14" fill="currentColor" viewBox="0 0 16 16">
+              <path d="M9.405 1.05c-.413-1.4-2.397-1.4-2.81 0l-.1.34a1.464 1.464 0 0 1-2.105.872l-.31-.17c-1.283-.698-2.686.705-1.987 1.987l.169.311c.446.82.023 1.841-.872 2.105l-.34.1c-1.4.413-1.4 2.397 0 2.81l.34.1a1.464 1.464 0 0 1 .872 2.105l-.17.31c-.698 1.283.705 2.686 1.987 1.987l.311-.169a1.464 1.464 0 0 1 2.105.872l.1.34c.413 1.4 2.397 1.4 2.81 0l.1-.34a1.464 1.464 0 0 1 2.105-.872l.31.17c1.283.698 2.686-.705 1.987-1.987l-.169-.311a1.464 1.464 0 0 1 .872-2.105l.34-.1c1.4-.413 1.4-2.397 0-2.81l-.34-.1a1.464 1.464 0 0 1-.872-2.105l.17-.31c.698-1.283-.705-2.686-1.987-1.987l-.311.169a1.464 1.464 0 0 1-2.105-.872zM8 10.93a2.929 2.929 0 1 1 0-5.86 2.929 2.929 0 0 1 0 5.858z"/>
+            </svg>
+            Store Manager
+          </span>
+          <span class="mobile-utility-link">Find a Store</span>
+          <span class="mobile-utility-link">Help</span>
+          <span class="mobile-utility-link">Join Us</span>
+          <span class="mobile-utility-link" style="font-weight: 500;">Sign In</span>
         </div>
       </div>
     </div>
