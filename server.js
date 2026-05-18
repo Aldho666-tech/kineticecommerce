@@ -131,3 +131,5 @@ app.get('/api/orders', async (req, res) => {
 app.listen(PORT, () => {
   console.log(`KINETIC E-Commerce Server is running on http://localhost:${PORT}`);
 });
+
+module.exports = app;
